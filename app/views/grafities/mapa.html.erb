@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="vendor/css/starter-template.css" rel="stylesheet">
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6wzeNjiXbHStSt8zDFDkh0SlmdUyLqQQ&sensor=false">
+    </script>
+
+  </head>
+  <body >
+  
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header" >
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" ><img width="175" height="40" src="vendor/img/logo2.png"></a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ><a href="index.php" >Dashboard</a></li>
+            <li ><a href="regionales.php" >Vista Detallada</a></li>
+            <li ><a  href="tabla.php" >Puntuaciones</a></li>
+            <li ><a  href="geotrack.php" >GeoTracker</a></li>
+            <li ><a  href="mediciones_cliente.php" >Mediciones</a></li>
+            <li ><a  href="http://synapsis-rs.org/Visores/videosfrisby/" >Videos</a></li>
+            <li ><a  href="security/logout.php">Salir</a></li>
+<!--             <li style="color:#FFFFFF"><a style="color:#FFFFFF" href="security/logout.php" style="color:#FFFF">Salir</a></li> -->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+    <br><br><br><br>
+    
+    <!-- CONTROLES-->
+     <div class="container">
+        <!-- FILTROS-->
+        <div class="row">
+                <!-- confs -->
+            <div>
+            <input type="hidden" id="valor" name="valor" value="<?php echo $_SESSION['valor'];?>">
+            <br>
+            <input type="hidden" id="type_name" name="type_name" value="<?php echo $_SESSION['type_name'];?>">
+            <br>
+            </div>
+          <!-- Regional-->
+          <div class="col-md-3">
+                  Regional
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-regional" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+          
+          <!-- Ciudad-->
+          <div class="col-md-3">
+                  Ciudad
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-ciudad" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+          
+          
+          <!-- Propios / Franquicias-->
+          <div class="col-md-4">
+                   Propios / Franquicias
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-tipo" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+
+          <!-- Tipo Restaurante-->
+          <div class="col-md-3">
+                   Tipo Restaurante
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-tiporestaurante" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                          <option value="PROPIOS">PROPIOS</option>
+                                          <option value="FRANQUICIAS">FRANQUICIAS</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+          
+        </div><!-- Cierre Filtros-->
+          
+        <hr /> 
+        <!-- Filtros 1.5-->
+        <div class="row">
+           <!-- Restaurante-->
+          <div class="col-md-3">
+                   Restaurante
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-restaurante" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+          
+          
+          <!-- Jefe de Zona-->
+          <div class="col-md-3">
+                   Jefe de Zona
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-jefe" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+          
+        </div>
+         <hr /> 
+        <!-- Filtros 2-->
+        <div class="row">
+        
+          <!-- Rol -->
+          <div class="col-md-5">
+                   Rol
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-rol" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                          <option value="1">Familia con niños </option>
+                                          <option value="2">Pareja</option>
+                                          <option value="3">Adulto o joven solo</option>
+                                          <option value="4">Atención Especial (Adulto mayor o Mujer embarazada, 1 solo padre con un bebé, discapacitados)</option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+          
+          <!-- Actitud -->
+          <div class="col-md-5">
+                   Actitud
+                  <div class="input-group">
+                          <div class="input-group-btn">
+                                  <select id="select-actitud" class="form-control priority-value">
+                                          <option value="todo">Todas</option>
+                                          <option value="1">Todo dice que no</option>
+                                          <option value="2">Acepta algunas cosas y rechaza otras </option>
+                                          <option value="3">Acepta todo </option>
+                                          <option value="4">Cliente enojado </option>
+                                  </select>
+                          </div>
+                  </div>
+          </div>
+         
+         <!-- Periodos -->
+          <div class="col-lg-6">
+                  Periodo
+                  <div>
+                          <input type="checkbox" name="chk_group[]"  value="2014-8" class="periods" />2014-08 (Agosto)<br />
+                          <input type="checkbox" name="chk_group[]"  value="2014-9" class="periods" />2014-09 (Septiembre)<br />
+
+                  </div>
+        </div><!-- /.col-lg-6-->
+          
+        </div><!-- Cierre Filtros2-->
+
+
+      </div>
+
+    
+    
+          <div class="container ">
+                        
+                        <!-- Total Encuestas-->
+                        <div class="row">
+                              <h4>Total de encuestas con los parametros definidos</h4>
+                              <div class="col-md-8" id="contenedor_de_total_respuestas"></div>
+                      </div>
+
+          </div>
+          <br><br>
+          
+          
+    <div id="map_canvas" style="width:auto; height:100%"></div>
+    
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    
+    <!-- /.importar javascript de bootstrap -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- /.importar javascript base donde se inicializa todo-->
+    <script type="text/javascript" src="scripts/util.js"></script>
+    
+    <script type="text/javascript" src="scripts/geotrack/load_google_geo.js"></script>
+    
+    <script type="text/javascript" src="scripts/geotrack/calls_geotrack.js"></script>
+    
+    <script type="text/javascript" src="scripts/geotrack/base.js"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  latitud: MyString
+  longitud: MyString
+  estrato: 1
+  seguridad: 1
+  educacion: 1
+
+two:
+  title: MyString
+  latitud: MyString
+  longitud: MyString
+  estrato: 1
+  seguridad: 1
+  educacion: 1

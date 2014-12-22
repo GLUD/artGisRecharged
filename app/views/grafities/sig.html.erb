@@ -1,0 +1,79 @@
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6wzeNjiXbHStSt8zDFDkh0SlmdUyLqQQ&sensor=false">
+    </script>
+    
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-12" >
+      <div id="map_canvas" style='width: 600px; height: 800px;'></div>
+    </div>
+    <div class="col-md-10 col-sm-offset-1"  >
+      <div id="map_foto"></div>
+        <img/>
+    </div>
+  </div>
+</div>
+
+    <script type="text/javascript">
+    
+      var features = new Array();
+      
+      var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+          anchor: [0.5, 46],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          opacity: 0.75,
+          src: "<%= image_path('icon.png') %>"
+        }))
+      });
+
+     <% @grafities.each do |grafiti| %>
+
+        var iconFeature = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.transform([ <%= grafiti.longitud %>,<%= grafiti.latitud %>], 'EPSG:4326', 'EPSG:3857')),
+          name: " <%= grafiti.title %> ",
+          url: "<%= grafiti.ruta %>",
+        });
+        iconFeature.setStyle(iconStyle);
+        features.push(iconFeature);
+      <% end %>
+
+      var vectorSource = new ol.source.Vector({
+        features: features
+      });
+
+      var vectorLayer = new ol.layer.Vector({
+        source: vectorSource
+      });
+
+
+      var map = new ol.Map({
+        target: 'map_canvas',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.TileJSON({
+              url: 'http://api.tiles.mapbox.com/v3/mapbox.geography-class.jsonp'
+              })
+            })
+            ,vectorLayer
+        ],
+        view: new ol.View({
+          center: ol.proj.transform([-73.7126515,4.0761681], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 4
+        })
+      });
+
+      // display image on click
+    map.on('click', function(evt) {
+      var feature = map.forEachFeatureAtPixel(evt.pixel,
+          function(feature, layer) {
+            return feature;
+          });
+      if (feature) {
+          $("#map_foto").empty();
+          $("#map_foto").append('<h2>'+feature.get('name')+'</h2>');
+          $("#map_foto").append('<img src="'+feature.get('url')+'" >');
+      } 
+    });
+    </script>

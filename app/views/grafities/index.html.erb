@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Todos los grafiti registrados en nuestro sistema</h1>
+  <%= link_to 'Nuevo Grafiti', new_grafity_path %>
+  <table>
+    <tr>
+      <th> Título </th>
+      <th> Estrato Socioeconómico </th>
+      <th> Seguridad </th>
+      <th> Educación </th>
+      <th> Latitud </th>
+      <th> Longitud </th>
+    </tr>
+  
+    <% @grafities.each do |grafiti| %>
+      <tr>
+        <td><%= grafiti.title %></td>
+        <td><%= grafiti.estrato %></td>
+        <td><%= grafiti.seguridad %></td>
+        <td><%= grafiti.educacion %></td>
+        <td><%= grafiti.latitud %></td>
+          <td><%= grafiti.longitud %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

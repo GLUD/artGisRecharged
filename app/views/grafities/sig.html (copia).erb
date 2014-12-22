@@ -1,0 +1,49 @@
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6wzeNjiXbHStSt8zDFDkh0SlmdUyLqQQ&sensor=false">
+    </script>
+    
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-12" >
+      <div id="map_canvas" style='width: 600px; height: 800px;'></div>
+    </div>
+    <div class="col-md-10 col-sm-offset-1"  >
+      <div id="map_foto"></div>
+        <img/>
+    </div>
+  </div>
+</div>
+
+<script>
+        var mapOptions = {
+          center: new google.maps.LatLng(4.4279158, -74.2704962),
+          zoom: 7,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+         map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+
+  <% @grafities.each do |grafiti| %>
+
+    marker = new google.maps.Marker(
+            {position: new google.maps.LatLng(<%= grafiti.latitud %>, <%= grafiti.longitud %>),
+              map: map,
+              content: " <%= grafiti.title %> " ,
+              url: "<%= grafiti.ruta %>",
+              title: " <%= grafiti.title %> " + " Estrato: "+ " <%= grafiti.estrato %> " + " Seguridad: " +" <%= grafiti.seguridad %> " + "Educacion: "+ " <%= grafiti.educacion %> ", 
+              id: <%= grafiti.id %>});
+
+    google.maps.event.addListener(marker, 'click',(function(marker_inner)
+    {
+            return function()
+                    {
+                            map.setZoom(15);
+                            map.setCenter(marker_inner.getPosition());
+                            $("#map_foto").empty();
+                            $("#map_foto").append(' <%= image_tag grafiti.ruta %>')
+                    }
+    })(marker)
+    );
+  <% end %>
+
+</script>
